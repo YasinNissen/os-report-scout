@@ -1,6 +1,8 @@
 package com.yasin.nissen.os_scout.DataBaseOperations;
 
 import com.yasin.nissen.os_scout.Model.GitResponse;
+
+import java.net.SocketPermission;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -49,20 +51,21 @@ public class DataBaseObject {
         }
     }
 
-    /*Inserts a GitResponse Object into the DataBase*/
-    public void insertInto(GitResponse gitResponse){
+    /*Inserts a the GitResponse Objects into os_projects*/
+    public void insertOsProjects(GitResponse gitResponse){
+
         String sqlcommand ="INSERT INTO os_projects(git_id, projectname,language,forks, open_issues,watchers, created, last_update, git_url, owner) " +
                 "Values("+gitResponse.getId()
                 +",'" +gitResponse.getName()
-                +"','" +gitResponse.getLanguage()
-                +"'," +gitResponse.getForks_count()
+                +"',(select id from language where language = "+"'"+gitResponse.getLanguage()
+                +"')," +gitResponse.getForks_count()
                 +"," +gitResponse.getOpen_issues()
                 +"," +gitResponse.getWatchers()
                 +",'" +gitResponse.getCreated_at()
                 +"','" +gitResponse.getUpdated_at()
                 +"','" +gitResponse.getHtml_url()
-                +"','" +gitResponse.owner.getLogin()
-                +"')";
+                +"',(select id from owner where owner = "+"'"+gitResponse.getOwner().getLogin()
+                +"'))";
 
         try {
             Statement statement = db_connection.createStatement();
@@ -72,19 +75,48 @@ public class DataBaseObject {
         }
 
     }
+    /*Inserts a the GitResponse Objects into os_projects*/
+    public void insertOnwer(GitResponse gitResponse){
 
+        String sqlcommand ="INSERT INTO owner(owner) " +
+                "Values('"+gitResponse.getOwner().getLogin() +"')";
+
+        try {
+            Statement statement = db_connection.createStatement();
+            statement.executeUpdate(sqlcommand);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    /*Inserts a the GitResponse Objects into language*/
+    public void insertLanguage(GitResponse gitResponse){
+
+        String sqlcommand ="INSERT INTO language(language) " +
+                "Values('"+gitResponse.getLanguage()+"')";
+
+        try {
+            Statement statement = db_connection.createStatement();
+            statement.executeUpdate(sqlcommand);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
     /*Retrives all Data in a Select query into a List of GitResponses*/
     public List<GitResponse> selectFrom(){
-        String sqlcommand ="SELECT * FROM os_projects";
+        String sqlcommand ="Select git_id, projectname, forks, open_issues, watchers, created, last_update, git_url, owner.owner, language.language FROM os_projects LEFT JOIN language ON os_projects.language = language.id LEFT JOIN owner ON os_projects.owner = owner.id;";
+        System.out.println(sqlcommand);
         GitResponse response = new GitResponse();
         List<GitResponse> dbResponses = new ArrayList<GitResponse>();
 
         try {
             Statement statement = db_connection.createStatement();
             ResultSet queryResult = statement.executeQuery(sqlcommand);
-
+            System.out.println(queryResult.toString());
             while (queryResult.next()) {
 
+                    //System.out.println("Hallo");
                     response.setId(queryResult.getInt("git_id"));
                     response.setName(queryResult.getString("projectname"));
                     response.setLanguage(queryResult.getString("language"));
@@ -94,9 +126,12 @@ public class DataBaseObject {
                     response.setCreated_at(queryResult.getString("created"));
                     response.setUpdated_at(queryResult.getString("last_update"));
                     response.setHtml_url(queryResult.getString("git_url"));
-                    //singleObject.owner.setLogin(queryResult.getString("owner"));
+                    response.setHtml_url(queryResult.getString("ownerName"));
+                    //System.out.println(response.toString2());
                     dbResponses.add(response);
+
             }
+
         } catch (SQLException e ) {
             //JDBCTutorialUtilities.printSQLException(e);
 

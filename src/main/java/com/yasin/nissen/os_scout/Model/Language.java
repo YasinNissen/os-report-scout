@@ -3,18 +3,18 @@ package com.yasin.nissen.os_scout.Model;
 /**
  * Created by ynissen on 8/12/17.
  */
-public class ProjectLanguage {
-    private String codeLanguage;
+public class Language {
+    private String language;
 
-    public ProjectLanguage(String codeLanguage) {
-        this.codeLanguage = codeLanguage;
+    public Language(String codeLanguage) {
+        this.language = codeLanguage;
     }
 
-    public String getCodeLanguage() {
-        return codeLanguage;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setCodeLanguage(String codeLanguage) {
-        this.codeLanguage = codeLanguage;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

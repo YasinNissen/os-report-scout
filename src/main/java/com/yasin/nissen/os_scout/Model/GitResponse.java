@@ -1,5 +1,4 @@
 package com.yasin.nissen.os_scout.Model;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by ynissen on 7/14/17.
@@ -15,11 +14,15 @@ public class GitResponse {
     private String created_at;
     private String updated_at;
     private String html_url;
-    public ProjectOwner owner;
+    private ProjectOwner owner;
+    private String ownerName;
 
+    public String getOwnerName() {
+        return ownerName;
+    }
 
-    public GitResponse(){
-
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public ProjectOwner getOwner() {
@@ -107,16 +110,27 @@ public class GitResponse {
     public String toString() {
         return "GitResponse{" +
                 "id=" + id +" ; "+"name=" + name+" ; "
-                +"language=" + language+" ; "
+                +"language=" + language +" ; "
                 +"forks_count=" + forks_count+" ; "
                 +"open_issues=" + open_issues+" ; "
                 +"watchers=" + watchers+" ; "
                 +"created_id=" + created_at+" ; "
                 +"updated_at=" + updated_at+" ; "
-
+                +"owner=" + owner.getLogin()+" ; "
+                +"html_url=" + html_url+
+                '}';
+    }
+    public String toString2() {
+        return "GitResponse{" +
+                "id=" + id +" ; "+"name=" + name+" ; "
+                +"language=" + language +" ; "
+                +"forks_count=" + forks_count+" ; "
+                +"open_issues=" + open_issues+" ; "
+                +"watchers=" + watchers+" ; "
+                +"created_id=" + created_at+" ; "
+                +"updated_at=" + updated_at+" ; "
+                +"owner=" + ownerName+" ; "
                 +"html_url=" + html_url+
                 '}';
     }
 }
-
-//+"owner=" + owner.getLogin()+" ; "

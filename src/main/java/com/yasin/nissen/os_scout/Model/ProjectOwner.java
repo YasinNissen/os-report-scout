@@ -6,10 +6,6 @@ package com.yasin.nissen.os_scout.Model;
 public class ProjectOwner {
     private String login;
 
-    public ProjectOwner() {
-
-    }
-
     public String getLogin() {
         return login;
     }
