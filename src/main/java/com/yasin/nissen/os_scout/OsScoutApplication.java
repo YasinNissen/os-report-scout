@@ -54,8 +54,7 @@ public class OsScoutApplication {
         }
 */
         //Perform SQL query to retrieve GitResponse Objects from Database into new List of DataBaseObjects
-           System.out.println( mydatabase.selectFrom());
-            //System.out.println(response.toString2());
+        List<GitResponse> toFrontendResponse = mydatabase.selectFrom();
 
 
 
