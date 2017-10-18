@@ -20,6 +20,8 @@ import java.util.List;
 public class OsScoutApplication {
     public static void main(String[] args) {
 
+        servletHandler
+                server.start();
 
         //Store API Response into a List of GitResponses
         JacksonJsonProvider configure = new JacksonJaxbJsonProvider().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -30,11 +32,11 @@ public class OsScoutApplication {
         //System.out.println(gitResponses.toString());
 
         //create DataBase Object with correct URL and Headers
-        DataBaseObject mydatabase = new DataBaseObject("jdbc:postgresql://localhost/ynissen?user=ynissen&password=123password","org.postgresql.Driver");
+        DataBaseObject mydatabase = new DataBaseObject("jdbc:postgresql://localhost/postgres?user=ynissen","org.postgresql.Driver");
 
         //Open Connection to DataBase
         mydatabase.connect();
-/*
+
         //insert gitResponses into owner objects
         for(GitResponse response : gitResponses) {
 
@@ -52,7 +54,6 @@ public class OsScoutApplication {
 
             mydatabase.insertOsProjects(response);
         }
-*/
         //Perform SQL query to retrieve GitResponse Objects from Database into new List of DataBaseObjects
         List<GitResponse> toFrontendResponse = mydatabase.selectFrom();
 
