@@ -108,7 +108,7 @@ public class GitResponse {
 
     @Override
     public String toString() {
-        return "GitResponse{" +
+        return "GitResponse:{" +
                 "id=" + id +" ; "+"name=" + name+" ; "
                 +"language=" + language +" ; "
                 +"forks_count=" + forks_count+" ; "
@@ -116,12 +116,12 @@ public class GitResponse {
                 +"watchers=" + watchers+" ; "
                 +"created_id=" + created_at+" ; "
                 +"updated_at=" + updated_at+" ; "
-                +"owner=" + owner.getLogin()+" ; "
+                //+"owner=" + owner.getLogin()+" ; "
                 +"html_url=" + html_url+
                 '}';
     }
     public String toString2() {
-        return "GitResponse{" +
+        return "GitResponse:{" +
                 "id=" + id +" ; "+"name=" + name+" ; "
                 +"language=" + language +" ; "
                 +"forks_count=" + forks_count+" ; "

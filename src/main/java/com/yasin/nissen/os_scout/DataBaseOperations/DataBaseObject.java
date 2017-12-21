@@ -105,18 +105,15 @@ public class DataBaseObject {
     }
     /*Retrives all Data in a Select query into a List of GitResponses*/
     public List<GitResponse> selectFrom(){
-        //String sqlcommand ="Select git_id, projectname, forks, open_issues, watchers, created, last_update, git_url, owner.owner, language.language FROM os_projects LEFT JOIN language ON os_projects.language = language.id LEFT JOIN owner ON os_projects.owner = owner.id;";
-        String sqlcommand = "SELECT * FROM os_projects;";
-        //System.out.println(sqlcommand);
+        String sqlcommand ="Select git_id, projectname, forks, open_issues, watchers, created, last_update, git_url, owner.owner, language.language FROM os_projects LEFT JOIN language ON os_projects.language = language.id LEFT JOIN owner ON os_projects.owner = owner.id;";
+        //String sqlcommand = "SELECT * FROM os_projects;";
         GitResponse response = new GitResponse();
         List<GitResponse> dbResponses = new ArrayList<GitResponse>();
 
         try {
             Statement statement = db_connection.createStatement();
             ResultSet queryResult = statement.executeQuery(sqlcommand);
-            System.out.println(queryResult.toString());
             while (queryResult.next()) {
-
                     response.setId(queryResult.getInt("git_id"));
                     response.setName(queryResult.getString("projectname"));
                     response.setLanguage(queryResult.getString("language"));
@@ -127,17 +124,15 @@ public class DataBaseObject {
                     response.setUpdated_at(queryResult.getString("last_update"));
                     response.setHtml_url(queryResult.getString("git_url"));
                     response.setOwnerName(queryResult.getString("owner"));
-                    System.out.println(response.toString2());
-                    dbResponses.add(response);
 
+                    dbResponses.add(response);
             }
 
+
         } catch (SQLException e ) {
-                System.out.println("3");
-            //JDBCTutorialUtilities.printSQLException(e);
+                //JDBCTutorialUtilities.printSQLException(e);
 
         }
-        System.out.println("4");
         return dbResponses;
     }
 }
